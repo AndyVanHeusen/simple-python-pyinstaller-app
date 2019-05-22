@@ -1,5 +1,11 @@
 pipeline {
     agent none
+
+    options {
+        buildDiscarder logRotator(artifactDaysToKeepStr: '', artifactNumToKeepStr: '', daysToKeepStr: '7', numToKeepStr: '10')
+        disableConcurrentBuilds()
+    }
+
     stages {
         stage('Build') {
             agent {
@@ -42,4 +48,20 @@ pipeline {
             }
         }
     }
+    post {
+    always {
+      //recordIssues enabledForFailure: true, tools: [[pattern: '**/codenarc/main.xml', tool: [$class: 'CodeNArc']]]
+      junit 'PumpHouse/build/test-results/**/*.xml'
+      publishHTML(target: [
+          allowMissing: false,
+          alwaysLinkToLastBuild: false,
+          keepAll: true,
+          reportDir: 'PumpHouse/build/reports/tests/test',
+          reportFiles: 'index.html',
+          reportTitles: "Test Report",
+          reportName: "Test Report"
+      ])
+    }
+  }
+
 }
