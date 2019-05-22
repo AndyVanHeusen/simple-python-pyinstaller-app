@@ -24,7 +24,7 @@ pipeline {
                 }
             }
             steps {
-                sh 'py.test --verbose --junit-xml test-reports/results.xml sources/test_calc.py'
+                sh 'py.test --verbose --junit-xml test-reports/results.xml --html=test-reports/report.html sources/test_calc.py'
             }
             post {
                 always {
@@ -56,8 +56,8 @@ pipeline {
           allowMissing: false,
           alwaysLinkToLastBuild: false,
           keepAll: true,
-          reportDir: 'PumpHouse/build/reports/tests/test',
-          reportFiles: 'index.html',
+          reportDir: 'test-reports',
+          reportFiles: 'report.html',
           reportTitles: "Test Report",
           reportName: "Test Report"
       ])
