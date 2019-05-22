@@ -27,20 +27,6 @@ pipeline {
                 sh 'pip install pytest-html'
                 sh 'py.test --verbose --junit-xml test-reports/results.xml --html=test-reports/report.html sources/test_calc.py'
             }
-            post {
-                always {
-                    junit 'test-reports/results.xml'
-                    publishHTML(target: [
-                        allowMissing: false,
-                        alwaysLinkToLastBuild: false,
-                        keepAll: true,
-                        reportDir: 'test-reports',
-                        reportFiles: 'report.html',
-                        reportTitles: "Test Report",
-                        reportName: "Test Report"
-                    ])
-                }
-            }
         }
         stage('Deliver') {
             agent {
@@ -62,15 +48,6 @@ pipeline {
     always {
       //recordIssues enabledForFailure: true, tools: [[pattern: '**/codenarc/main.xml', tool: [$class: 'CodeNArc']]]
       junit 'test-results/**/*.xml'
-      publishHTML(target: [
-          allowMissing: false,
-          alwaysLinkToLastBuild: false,
-          keepAll: true,
-          reportDir: 'test-reports',
-          reportFiles: 'report.html',
-          reportTitles: "Test Report",
-          reportName: "Test Report"
-      ])
     }
   }
 
