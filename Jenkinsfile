@@ -24,8 +24,7 @@ pipeline {
                 }
             }
             steps {
-                sh 'pip install pytest-html'
-                sh 'py.test --verbose --junit-xml test-reports/results.xml --html=test-reports/report.html sources/test_calc.py'
+                sh 'py.test --verbose --junit-xml test-reports/results.xml sources/test_calc.py'
             }
         }
         stage('Deliver') {
