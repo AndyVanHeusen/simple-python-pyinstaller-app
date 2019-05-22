@@ -30,6 +30,15 @@ pipeline {
             post {
                 always {
                     junit 'test-reports/results.xml'
+                    publishHTML(target: [
+                        allowMissing: false,
+                        alwaysLinkToLastBuild: false,
+                        keepAll: true,
+                        reportDir: 'test-reports',
+                        reportFiles: 'report.html',
+                        reportTitles: "Test Report",
+                        reportName: "Test Report"
+                    ])
                 }
             }
         }
