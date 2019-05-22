@@ -51,7 +51,7 @@ pipeline {
     post {
     always {
       //recordIssues enabledForFailure: true, tools: [[pattern: '**/codenarc/main.xml', tool: [$class: 'CodeNArc']]]
-      junit 'PumpHouse/build/test-results/**/*.xml'
+      junit 'test-results/**/*.xml'
       publishHTML(target: [
           allowMissing: false,
           alwaysLinkToLastBuild: false,
