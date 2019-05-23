@@ -23,6 +23,15 @@ pipeline {
                         reportTitles: "Test Report",
                         reportName: "Test Report"
                     ])
+                    publishHTML(target: [
+                        allowMissing: false,
+                        alwaysLinkToLastBuild: false,
+                        keepAll: true,
+                        reportDir: 'cov-reports',
+                        reportFiles: 'index.html',
+                        reportTitles: "Coverage Report",
+                        reportName: "Coverage Report"
+                    ])
                 }
             }
         }
