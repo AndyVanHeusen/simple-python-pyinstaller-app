@@ -8,17 +8,21 @@ pipeline {
         stage('Build') {
             steps {
                 sh 'pipenv --three ' // install virtual environment
-                sh 'pipenv install --dev' //
-                sh 'pipenv run pytest --verbose --junit-xml test-reports/results.xml sources/test_calc.py'
+                sh 'pipenv install --dev' // set up that this is also a dev environment
+                sh 'pipenv run pytest --verbose --junit-xml test-reports/results.xml sources/test_calc.py --html=test-reports/report.html' //run pytest in our pipenv
             }
             post {
                 always {
-                    junit 'test-reports/results.xml'
-                    // publishHTML(target: [
-                    //     allowMissing: false,
-                    //     alwaysLinkToLastBuild: false,
-                    //     keepAll: true
-                    // ])
+                    junit 'test-reports/results.xml' // always publish the results of the test
+                    publishHTML(target: [
+                        allowMissing: false,
+                        alwaysLinkToLastBuild: false,
+                        keepAll: true,
+                        reportDir: 'test-reports',
+                        reportFiles: 'report.html',
+                        reportTitles: "Test Report",
+                        reportName: "Test Report"
+                    ])
                 }
             }
         }
