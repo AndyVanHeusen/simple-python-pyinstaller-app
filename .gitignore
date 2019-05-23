@@ -98,3 +98,7 @@ ENV/
 
 # mypy
 .mypy_cache/
+
+# junit and cov reports
+cov-reports/
+test-reports
