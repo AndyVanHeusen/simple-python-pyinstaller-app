@@ -48,11 +48,17 @@ pipeline {
             }
         }
     }
+
     post {
-    always {
-      //recordIssues enabledForFailure: true, tools: [[pattern: '**/codenarc/main.xml', tool: [$class: 'CodeNArc']]]
-      junit 'test-results/**/*.xml'
+        always {
+            //recordIssues enabledForFailure: true, tools: [[pattern: '**/codenarc/main.xml', tool: [$class: 'CodeNArc']]]
+            junit 'test-reports/results.xml'
+            publishHTML(target: [
+                allowMissing: false,
+                alwaysLinkToLastBuild: false,
+                keepAll: true
+            ])
+        }
     }
-  }
 
 }
