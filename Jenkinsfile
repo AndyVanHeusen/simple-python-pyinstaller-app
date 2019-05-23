@@ -1,5 +1,9 @@
 pipeline {
     agent any
+    options {
+        buildDiscarder logRotator(artifactDaysToKeepStr: '', artifactNumToKeepStr: '', daysToKeepStr: '7', numToKeepStr: '10')
+        disableConcurrentBuilds()
+    }
     stages {
         stage('Build') {
             steps {
@@ -10,6 +14,11 @@ pipeline {
             post {
                 always {
                     junit 'test-reports/results.xml'
+                    // publishHTML(target: [
+                    //     allowMissing: false,
+                    //     alwaysLinkToLastBuild: false,
+                    //     keepAll: true
+                    // ])
                 }
             }
         }
