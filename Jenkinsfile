@@ -9,7 +9,7 @@ pipeline {
             steps {
                 sh 'pipenv --three ' // install virtual environment
                 sh 'pipenv install --dev' // set up that this is also a dev environment
-                sh 'pipenv run pytest --verbose --junit-xml test-reports/results.xml sources/test_calc.py --html=test-reports/report.html' //run pytest in our pipenv
+                sh 'pipenv run pytest --verbose --junit-xml test-reports/results.xml sources/test_calc.py --html=test-reports/report.html --cov-report html:cov-reports --cov=sources/ sources/' //run pytest in our pipenv
             }
             post {
                 always {
@@ -20,8 +20,8 @@ pipeline {
                         keepAll: true,
                         reportDir: 'test-reports',
                         reportFiles: 'report.html',
-                        reportTitles: "Test Report",
-                        reportName: "Test Report"
+                        reportTitles: "JUnit Report",
+                        reportName: "JUnit Report"
                     ])
                 }
             }
